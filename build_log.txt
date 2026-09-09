@@ -1,0 +1,250 @@
+Initialized native services in: /Users/vc.munna.kumar/.gradle/native
+Initialized jansi services in: /Users/vc.munna.kumar/.gradle/native
+The client will now receive all logging from the daemon (pid: 36081). The daemon log file: /Users/vc.munna.kumar/.gradle/daemon/9.5.0/daemon-36081.out.log
+Starting 32nd build in daemon [uptime: 40 mins 35.877 secs, performance: 98%, GC rate: 0.00/s, heap usage: 0% of 4 GiB]
+Using 8 worker leases.
+Operational build model parameters: {cachingModelBuilding=false, configurationCache=true, configurationCacheDisabledReason=null, configurationCacheParallelLoad=true, configurationCacheParallelStore=false, configureOnDemand=false, invalidateCoupledProjects=false, isolatedProjects=false, modelAsProjectDependency=false, modelBuilding=false, parallelModelBuilding=false, parallelProjectConfiguration=false, parallelProjectExecution=false, resilientModelBuilding=false}
+Encryption key source: default Gradle keystore (pkcs12)
+Now considering [/Users/vc.munna.kumar/Documents/Testing Projects] as hierarchies to watch
+Reusing configuration cache.
+Now considering [/Users/vc.munna.kumar/Documents/Testing Projects] as hierarchies to watch
+Watching the file system is configured to be enabled if available
+File system watching is active
+Using local directory build cache for the root build (location = /Users/vc.munna.kumar/.gradle/caches/build-cache-1, remove unused entries = after 7 days).
+Tasks to be executed: [task ':core:kmpPartiallyResolvedDependenciesChecker', task ':core:checkKotlinGradlePluginConfigurationErrors', task ':core:downloadKotlinNativeDistribution', task ':core:compileKotlinIosArm64', task ':app:shared:kmpPartiallyResolvedDependenciesChecker', task ':app:shared:checkKotlinGradlePluginConfigurationErrors', task ':core:exportCrossCompilationMetadataForIosArm64ApiElements', task ':app:shared:checkIosArm64MainComposeLibrariesCompatibility', task ':app:shared:downloadKotlinNativeDistribution', task ':app:shared:convertXmlValueResourcesForAppleMain', task ':app:shared:copyNonXmlValueResourcesForAppleMain', task ':app:shared:prepareComposeResourcesTaskForAppleMain', task ':app:shared:generateResourceAccessorsForAppleMain', task ':app:shared:convertXmlValueResourcesForCommonMain', task ':app:shared:copyNonXmlValueResourcesForCommonMain', task ':app:shared:prepareComposeResourcesTaskForCommonMain', task ':app:shared:generateResourceAccessorsForCommonMain', task ':app:shared:convertXmlValueResourcesForIosArm64Main', task ':app:shared:copyNonXmlValueResourcesForIosArm64Main', task ':app:shared:prepareComposeResourcesTaskForIosArm64Main', task ':app:shared:generateResourceAccessorsForIosArm64Main', task ':app:shared:convertXmlValueResourcesForIosMain', task ':app:shared:copyNonXmlValueResourcesForIosMain', task ':app:shared:prepareComposeResourcesTaskForIosMain', task ':app:shared:generateResourceAccessorsForIosMain', task ':app:shared:convertXmlValueResourcesForNativeMain', task ':app:shared:copyNonXmlValueResourcesForNativeMain', task ':app:shared:prepareComposeResourcesTaskForNativeMain', task ':app:shared:generateResourceAccessorsForNativeMain', task ':app:shared:generateActualResourceCollectorsForIosArm64Main', task ':app:shared:generateComposeResClass', task ':app:shared:generateExpectResourceCollectorsForCommonMain', task ':app:shared:compileKotlinIosArm64', task ':app:shared:linkDebugFrameworkIosArm64']
+Tasks that were excluded: []
+Resolve mutations for :core:kmpPartiallyResolvedDependenciesChecker (Thread[Execution worker,5,main]) started.
+Resolve mutations for :core:downloadKotlinNativeDistribution (Thread[Execution worker Thread 2,5,main]) started.
+Resolve mutations for :app:shared:checkIosArm64MainComposeLibrariesCompatibility (Thread[Execution worker Thread 4,5,main]) started.
+Resolve mutations for :app:shared:kmpPartiallyResolvedDependenciesChecker (Thread[Execution worker Thread 3,5,main]) started.
+Resolve mutations for :core:exportCrossCompilationMetadataForIosArm64ApiElements (Thread[Execution worker Thread 5,5,main]) started.
+Resolve mutations for :app:shared:downloadKotlinNativeDistribution (Thread[Execution worker Thread 6,5,main]) started.
+Resolve mutations for :app:shared:copyNonXmlValueResourcesForAppleMain (Thread[Execution worker Thread 7,5,main]) started.
+:core:kmpPartiallyResolvedDependenciesChecker (Thread[Execution worker,5,main]) started.
+Resolve mutations for :app:shared:convertXmlValueResourcesForAppleMain (Thread[included builds,5,main]) started.
+:app:shared:checkIosArm64MainComposeLibrariesCompatibility (Thread[Execution worker Thread 4,5,main]) started.
+:app:shared:kmpPartiallyResolvedDependenciesChecker (Thread[Execution worker Thread 3,5,main]) started.
+:core:exportCrossCompilationMetadataForIosArm64ApiElements (Thread[Execution worker Thread 5,5,main]) started.
+:core:downloadKotlinNativeDistribution (Thread[Execution worker Thread 6,5,main]) started.
+:app:shared:downloadKotlinNativeDistribution (Thread[Execution worker Thread 2,5,main]) started.
+:app:shared:copyNonXmlValueResourcesForAppleMain (Thread[Execution worker Thread 7,5,main]) started.
+Resolve mutations for :app:shared:convertXmlValueResourcesForCommonMain (Thread[included builds,5,main]) started.
+:app:shared:convertXmlValueResourcesForCommonMain (Thread[included builds,5,main]) started.
+
+> Task :app:shared:copyNonXmlValueResourcesForAppleMain NO-SOURCE
+file or directory '/Users/vc.munna.kumar/Documents/Testing Projects/app/shared/build/generated/compose/resourceGenerator/preparedResources/appleMain/composeResources', not found
+Skipping task ':app:shared:copyNonXmlValueResourcesForAppleMain' as it has no source files and no previous output files.
+:app:shared:convertXmlValueResourcesForAppleMain (Thread[Execution worker Thread 7,5,main]) started.
+Build 88723df1-d500-4819-a504-a4b983fe0cbc is started
+
+> Task :core:exportCrossCompilationMetadataForIosArm64ApiElements UP-TO-DATE
+Caching disabled for task ':core:exportCrossCompilationMetadataForIosArm64ApiElements' because:
+  Trivial operation
+Skipping task ':core:exportCrossCompilationMetadataForIosArm64ApiElements' as it is up-to-date.
+
+> Task :core:kmpPartiallyResolvedDependenciesChecker
+Caching disabled for task ':core:kmpPartiallyResolvedDependenciesChecker' because:
+  This task is not intended for execution
+Task ':core:kmpPartiallyResolvedDependenciesChecker' is not up-to-date because:
+  Task has not declared any outputs despite executing actions.
+Execution stopped by some action with message: null
+
+> Task :app:shared:kmpPartiallyResolvedDependenciesChecker
+Caching disabled for task ':app:shared:kmpPartiallyResolvedDependenciesChecker' because:
+  This task is not intended for execution
+Task ':app:shared:kmpPartiallyResolvedDependenciesChecker' is not up-to-date because:
+  Task has not declared any outputs despite executing actions.
+Execution stopped by some action with message: null
+
+> Task :app:shared:convertXmlValueResourcesForAppleMain NO-SOURCE
+file or directory '/Users/vc.munna.kumar/Documents/Testing Projects/app/shared/build/generated/compose/resourceGenerator/preparedResources/appleMain/composeResources', not found
+Skipping task ':app:shared:convertXmlValueResourcesForAppleMain' as it has no source files and no previous output files.
+Resolve mutations for :app:shared:copyNonXmlValueResourcesForCommonMain (Thread[Execution worker Thread 5,5,main]) started.
+Resolve mutations for :app:shared:prepareComposeResourcesTaskForAppleMain (Thread[Execution worker Thread 7,5,main]) started.
+Resolve mutations for :core:checkKotlinGradlePluginConfigurationErrors (Thread[Execution worker,5,main]) started.
+Resolve mutations for :app:shared:checkKotlinGradlePluginConfigurationErrors (Thread[Execution worker Thread 3,5,main]) started.
+:core:checkKotlinGradlePluginConfigurationErrors (Thread[Execution worker,5,main]) started.
+:app:shared:checkKotlinGradlePluginConfigurationErrors (Thread[Execution worker Thread 3,5,main]) started.
+
+> Task :app:shared:convertXmlValueResourcesForCommonMain NO-SOURCE
+Skipping task ':app:shared:convertXmlValueResourcesForCommonMain' as it has no source files and no previous output files.
+:app:shared:prepareComposeResourcesTaskForAppleMain (Thread[Execution worker Thread 5,5,main]) started.
+
+> Task :core:checkKotlinGradlePluginConfigurationErrors SKIPPED
+Skipping task ':core:checkKotlinGradlePluginConfigurationErrors' as task onlyIf 'errorDiagnostics are present' is false.
+Resolve mutations for :app:shared:convertXmlValueResourcesForIosArm64Main (Thread[Execution worker Thread 7,5,main]) started.
+Resolve mutations for :app:shared:copyNonXmlValueResourcesForIosArm64Main (Thread[Execution worker,5,main]) started.
+:app:shared:copyNonXmlValueResourcesForCommonMain (Thread[included builds,5,main]) started.
+:app:shared:convertXmlValueResourcesForIosArm64Main (Thread[Execution worker Thread 7,5,main]) started.
+
+> Task :app:shared:prepareComposeResourcesTaskForAppleMain NO-SOURCE
+Skipping task ':app:shared:prepareComposeResourcesTaskForAppleMain' as it has no source files and no previous output files.
+Resolve mutations for :app:shared:generateResourceAccessorsForAppleMain (Thread[Execution worker Thread 5,5,main]) started.
+
+> Task :app:shared:checkIosArm64MainComposeLibrariesCompatibility
+Caching disabled for task ':app:shared:checkIosArm64MainComposeLibrariesCompatibility' because:
+  Caching has not been enabled for the task
+Task ':app:shared:checkIosArm64MainComposeLibrariesCompatibility' is not up-to-date because:
+  Task has not declared any outputs despite executing actions.
+
+> Task :app:shared:convertXmlValueResourcesForIosArm64Main NO-SOURCE
+file or directory '/Users/vc.munna.kumar/Documents/Testing Projects/app/shared/build/generated/compose/resourceGenerator/preparedResources/iosArm64Main/composeResources', not found
+Skipping task ':app:shared:convertXmlValueResourcesForIosArm64Main' as it has no source files and no previous output files.
+:app:shared:generateResourceAccessorsForAppleMain (Thread[Execution worker Thread 5,5,main]) started.
+
+> Task :app:shared:checkKotlinGradlePluginConfigurationErrors SKIPPED
+Skipping task ':app:shared:checkKotlinGradlePluginConfigurationErrors' as task onlyIf 'errorDiagnostics are present' is false.
+Resolve mutations for :app:shared:copyNonXmlValueResourcesForIosMain (Thread[Execution worker Thread 7,5,main]) started.
+Resolve mutations for :app:shared:convertXmlValueResourcesForNativeMain (Thread[Execution worker Thread 3,5,main]) started.
+Resolve mutations for :app:shared:convertXmlValueResourcesForIosMain (Thread[Execution worker Thread 4,5,main]) started.
+:app:shared:copyNonXmlValueResourcesForIosArm64Main (Thread[Execution worker,5,main]) started.
+:app:shared:copyNonXmlValueResourcesForIosMain (Thread[Execution worker Thread 7,5,main]) started.
+:app:shared:convertXmlValueResourcesForNativeMain (Thread[Execution worker Thread 3,5,main]) started.
+
+> Task :app:shared:generateResourceAccessorsForAppleMain NO-SOURCE
+Skipping task ':app:shared:generateResourceAccessorsForAppleMain' as it has no source files and no previous output files.
+
+> Task :app:shared:convertXmlValueResourcesForNativeMain NO-SOURCE
+file or directory '/Users/vc.munna.kumar/Documents/Testing Projects/app/shared/build/generated/compose/resourceGenerator/preparedResources/nativeMain/composeResources', not found
+Skipping task ':app:shared:convertXmlValueResourcesForNativeMain' as it has no source files and no previous output files.
+Resolve mutations for :app:shared:copyNonXmlValueResourcesForNativeMain (Thread[Execution worker Thread 5,5,main]) started.
+Resolve mutations for :app:shared:generateComposeResClass (Thread[Execution worker Thread 4,5,main]) started.
+:app:shared:copyNonXmlValueResourcesForNativeMain (Thread[Execution worker Thread 3,5,main]) started.
+Resolve mutations for :app:shared:generateExpectResourceCollectorsForCommonMain (Thread[Execution worker Thread 5,5,main]) started.
+:app:shared:generateExpectResourceCollectorsForCommonMain (Thread[Execution worker Thread 5,5,main]) started.
+
+> Task :app:shared:copyNonXmlValueResourcesForIosMain NO-SOURCE
+file or directory '/Users/vc.munna.kumar/Documents/Testing Projects/app/shared/build/generated/compose/resourceGenerator/preparedResources/iosMain/composeResources', not found
+Skipping task ':app:shared:copyNonXmlValueResourcesForIosMain' as it has no source files and no previous output files.
+:app:shared:convertXmlValueResourcesForIosMain (Thread[Execution worker Thread 7,5,main]) started.
+:app:shared:generateComposeResClass (Thread[Execution worker Thread 4,5,main]) started.
+
+> Task :app:shared:generateComposeResClass UP-TO-DATE
+Caching disabled for task ':app:shared:generateComposeResClass' because:
+  Caching has not been enabled for the task
+Skipping task ':app:shared:generateComposeResClass' as it is up-to-date.
+
+> Task :app:shared:copyNonXmlValueResourcesForNativeMain NO-SOURCE
+file or directory '/Users/vc.munna.kumar/Documents/Testing Projects/app/shared/build/generated/compose/resourceGenerator/preparedResources/nativeMain/composeResources', not found
+Skipping task ':app:shared:copyNonXmlValueResourcesForNativeMain' as it has no source files and no previous output files.
+
+> Task :app:shared:copyNonXmlValueResourcesForIosArm64Main NO-SOURCE
+file or directory '/Users/vc.munna.kumar/Documents/Testing Projects/app/shared/build/generated/compose/resourceGenerator/preparedResources/iosArm64Main/composeResources', not found
+Skipping task ':app:shared:copyNonXmlValueResourcesForIosArm64Main' as it has no source files and no previous output files.
+work action resolve crossCompilationMetadata_iosArm64ApiElements.json (project :core) (Thread[Execution worker Thread 4,5,main]) started.
+
+> Task :app:shared:generateExpectResourceCollectorsForCommonMain UP-TO-DATE
+Caching disabled for task ':app:shared:generateExpectResourceCollectorsForCommonMain' because:
+  Caching has not been enabled for the task
+Skipping task ':app:shared:generateExpectResourceCollectorsForCommonMain' as it is up-to-date.
+Resolve mutations for :app:shared:prepareComposeResourcesTaskForIosArm64Main (Thread[Execution worker Thread 4,5,main]) started.
+Resolve mutations for :app:shared:prepareComposeResourcesTaskForNativeMain (Thread[Execution worker Thread 3,5,main]) started.
+
+> Task :app:shared:copyNonXmlValueResourcesForCommonMain UP-TO-DATE
+Caching disabled for task ':app:shared:copyNonXmlValueResourcesForCommonMain' because:
+  Caching has not been enabled for the task
+Skipping task ':app:shared:copyNonXmlValueResourcesForCommonMain' as it is up-to-date.
+:app:shared:prepareComposeResourcesTaskForIosArm64Main (Thread[Execution worker Thread 4,5,main]) started.
+
+> Task :app:shared:convertXmlValueResourcesForIosMain NO-SOURCE
+file or directory '/Users/vc.munna.kumar/Documents/Testing Projects/app/shared/build/generated/compose/resourceGenerator/preparedResources/iosMain/composeResources', not found
+Skipping task ':app:shared:convertXmlValueResourcesForIosMain' as it has no source files and no previous output files.
+Resolve mutations for :app:shared:prepareComposeResourcesTaskForIosMain (Thread[Execution worker Thread 7,5,main]) started.
+Resolve mutations for :app:shared:prepareComposeResourcesTaskForCommonMain (Thread[included builds,5,main]) started.
+:app:shared:prepareComposeResourcesTaskForIosMain (Thread[Execution worker Thread 7,5,main]) started.
+:app:shared:prepareComposeResourcesTaskForNativeMain (Thread[Execution worker Thread 5,5,main]) started.
+
+> Task :app:shared:prepareComposeResourcesTaskForIosMain NO-SOURCE
+Skipping task ':app:shared:prepareComposeResourcesTaskForIosMain' as it has no source files and no previous output files.
+
+> Task :app:shared:prepareComposeResourcesTaskForIosArm64Main NO-SOURCE
+Skipping task ':app:shared:prepareComposeResourcesTaskForIosArm64Main' as it has no source files and no previous output files.
+:app:shared:prepareComposeResourcesTaskForCommonMain (Thread[included builds,5,main]) started.
+Resolve mutations for :app:shared:generateResourceAccessorsForIosArm64Main (Thread[Execution worker Thread 4,5,main]) started.
+Resolve mutations for :app:shared:generateResourceAccessorsForIosMain (Thread[Execution worker Thread 7,5,main]) started.
+:app:shared:generateResourceAccessorsForIosArm64Main (Thread[Execution worker Thread 4,5,main]) started.
+
+> Task :app:shared:generateResourceAccessorsForIosArm64Main NO-SOURCE
+Skipping task ':app:shared:generateResourceAccessorsForIosArm64Main' as it has no source files and no previous output files.
+:app:shared:generateResourceAccessorsForIosMain (Thread[Execution worker Thread 7,5,main]) started.
+
+> Task :app:shared:prepareComposeResourcesTaskForNativeMain NO-SOURCE
+Skipping task ':app:shared:prepareComposeResourcesTaskForNativeMain' as it has no source files and no previous output files.
+Resolve mutations for :app:shared:generateResourceAccessorsForNativeMain (Thread[Execution worker Thread 5,5,main]) started.
+:app:shared:generateResourceAccessorsForNativeMain (Thread[Execution worker Thread 5,5,main]) started.
+
+> Task :app:shared:prepareComposeResourcesTaskForCommonMain UP-TO-DATE
+Caching disabled for task ':app:shared:prepareComposeResourcesTaskForCommonMain' because:
+  Caching has not been enabled for the task
+Skipping task ':app:shared:prepareComposeResourcesTaskForCommonMain' as it is up-to-date.
+Resolve mutations for :app:shared:generateResourceAccessorsForCommonMain (Thread[included builds,5,main]) started.
+
+> Task :app:shared:generateResourceAccessorsForIosMain NO-SOURCE
+Skipping task ':app:shared:generateResourceAccessorsForIosMain' as it has no source files and no previous output files.
+:app:shared:generateResourceAccessorsForCommonMain (Thread[included builds,5,main]) started.
+
+> Task :app:shared:generateResourceAccessorsForNativeMain NO-SOURCE
+Skipping task ':app:shared:generateResourceAccessorsForNativeMain' as it has no source files and no previous output files.
+
+> Task :app:shared:generateResourceAccessorsForCommonMain UP-TO-DATE
+Caching disabled for task ':app:shared:generateResourceAccessorsForCommonMain' because:
+  Caching has not been enabled for the task
+Skipping task ':app:shared:generateResourceAccessorsForCommonMain' as it is up-to-date.
+Resolve mutations for :app:shared:generateActualResourceCollectorsForIosArm64Main (Thread[included builds,5,main]) started.
+:app:shared:generateActualResourceCollectorsForIosArm64Main (Thread[included builds,5,main]) started.
+
+> Task :app:shared:generateActualResourceCollectorsForIosArm64Main UP-TO-DATE
+Caching disabled for task ':app:shared:generateActualResourceCollectorsForIosArm64Main' because:
+  Caching has not been enabled for the task
+Skipping task ':app:shared:generateActualResourceCollectorsForIosArm64Main' as it is up-to-date.
+
+> Task :core:downloadKotlinNativeDistribution UP-TO-DATE
+Kotlin Native Bundle: Acquire lock: /Users/vc.munna.kumar/.konan/kotlin-native-prebuilt-macos-aarch64-2.4.10/.lock ...
+Kotlin Native Bundle: Lock acquired: /Users/vc.munna.kumar/.konan/kotlin-native-prebuilt-macos-aarch64-2.4.10/.lock
+Kotlin Native Bundle: Lock released: /Users/vc.munna.kumar/.konan/kotlin-native-prebuilt-macos-aarch64-2.4.10/.lock
+Caching disabled for task ':core:downloadKotlinNativeDistribution' because:
+  Task output contains file with kotlin native location, this file should not be restore from the cache as it could lead to a wrong location
+Skipping task ':core:downloadKotlinNativeDistribution' as it is up-to-date.
+Resolve mutations for :core:compileKotlinIosArm64 (Thread[Execution worker Thread 6,5,main]) started.
+
+> Task :app:shared:downloadKotlinNativeDistribution UP-TO-DATE
+Kotlin Native Bundle: Acquire lock: /Users/vc.munna.kumar/.konan/kotlin-native-prebuilt-macos-aarch64-2.4.10/.lock ...
+Kotlin Native Bundle: Lock acquired: /Users/vc.munna.kumar/.konan/kotlin-native-prebuilt-macos-aarch64-2.4.10/.lock
+Kotlin Native Bundle: Lock released: /Users/vc.munna.kumar/.konan/kotlin-native-prebuilt-macos-aarch64-2.4.10/.lock
+Caching disabled for task ':app:shared:downloadKotlinNativeDistribution' because:
+  Task output contains file with kotlin native location, this file should not be restore from the cache as it could lead to a wrong location
+Skipping task ':app:shared:downloadKotlinNativeDistribution' as it is up-to-date.
+:core:compileKotlinIosArm64 (Thread[Execution worker Thread 6,5,main]) started.
+
+> Task :core:compileKotlinIosArm64 UP-TO-DATE
+Kotlin Native Bundle: Acquire lock: /Users/vc.munna.kumar/.konan/kotlin-native-prebuilt-macos-aarch64-2.4.10/.lock ...
+Kotlin Native Bundle: Lock acquired: /Users/vc.munna.kumar/.konan/kotlin-native-prebuilt-macos-aarch64-2.4.10/.lock
+Kotlin Native Bundle: Lock released: /Users/vc.munna.kumar/.konan/kotlin-native-prebuilt-macos-aarch64-2.4.10/.lock
+Build cache key for task ':core:compileKotlinIosArm64' is ee72b901f001a398b8e8839681d90486
+Skipping task ':core:compileKotlinIosArm64' as it is up-to-date.
+work action resolve core (project :core) (Thread[Execution worker Thread 6,5,main]) started.
+Resolve mutations for :app:shared:compileKotlinIosArm64 (Thread[Execution worker Thread 6,5,main]) started.
+:app:shared:compileKotlinIosArm64 (Thread[Execution worker Thread 6,5,main]) started.
+
+> Task :app:shared:compileKotlinIosArm64 UP-TO-DATE
+Kotlin Native Bundle: Acquire lock: /Users/vc.munna.kumar/.konan/kotlin-native-prebuilt-macos-aarch64-2.4.10/.lock ...
+Kotlin Native Bundle: Lock acquired: /Users/vc.munna.kumar/.konan/kotlin-native-prebuilt-macos-aarch64-2.4.10/.lock
+Kotlin Native Bundle: Lock released: /Users/vc.munna.kumar/.konan/kotlin-native-prebuilt-macos-aarch64-2.4.10/.lock
+Build cache key for task ':app:shared:compileKotlinIosArm64' is e494c2625e4dfb60e164d67adce63a54
+Skipping task ':app:shared:compileKotlinIosArm64' as it is up-to-date.
+Resolve mutations for :app:shared:linkDebugFrameworkIosArm64 (Thread[Execution worker Thread 6,5,main]) started.
+:app:shared:linkDebugFrameworkIosArm64 (Thread[Execution worker Thread 6,5,main]) started.
+
+> Task :app:shared:linkDebugFrameworkIosArm64 UP-TO-DATE
+Kotlin Native Bundle: Acquire lock: /Users/vc.munna.kumar/.konan/kotlin-native-prebuilt-macos-aarch64-2.4.10/.lock ...
+Kotlin Native Bundle: Lock acquired: /Users/vc.munna.kumar/.konan/kotlin-native-prebuilt-macos-aarch64-2.4.10/.lock
+Kotlin Native Bundle: Lock released: /Users/vc.munna.kumar/.konan/kotlin-native-prebuilt-macos-aarch64-2.4.10/.lock
+Caching disabled for task ':app:shared:linkDebugFrameworkIosArm64' because:
+  'Task outputs cacheable' not satisfied
+Skipping task ':app:shared:linkDebugFrameworkIosArm64' as it is up-to-date.
+Build 88723df1-d500-4819-a504-a4b983fe0cbc is closed
+
+BUILD SUCCESSFUL in 997ms
+15 actionable tasks: 3 executed, 12 up-to-date
+Watched directory hierarchies: [/Users/vc.munna.kumar/Documents/Testing Projects]
+Configuration cache entry reused.
