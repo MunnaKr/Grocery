@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: kmp-grocery-server
+    runtime: docker
+    plan: free
+    region: ohio
+    envVars:
+      - key: PORT
+        value: 8080

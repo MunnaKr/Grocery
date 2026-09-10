@@ -26,6 +26,9 @@ kotlin {
        withHostTest {
            isIncludeAndroidResources = true
        }
+       withDeviceTest {
+           instrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+       }
     }
     
     sourceSets {

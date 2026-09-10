@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.targets.native.tasks.KotlinNativeSimulatorTest
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -10,14 +11,28 @@ plugins {
 
 kotlin {
 
-    listOf(
-        iosArm64(),
-        iosSimulatorArm64()
-    ).forEach { iosTarget ->
-        iosTarget.binaries.framework {
-            baseName = "Shared"
-            isStatic = true
+    val isXcodeFunctional = try {
+        providers.exec {
+            commandLine("xcodebuild", "-version")
+            isIgnoreExitValue = true
+        }.result.get().exitValue == 0
+    } catch (e: Exception) {
+        false
+    }
+
+    if (isXcodeFunctional) {
+        listOf(
+            iosArm64(),
+            iosSimulatorArm64()
+        ).forEach { iosTarget ->
+            iosTarget.binaries.framework {
+                baseName = "Shared"
+                isStatic = true
+                freeCompilerArgs += "-Xbinary=bundleId=com.munna.kmptesting.shared"
+            }
         }
+    } else {
+        logger.warn("iOS targets are disabled because 'xcodebuild' is not functional or Xcode is not properly configured.")
     }
     
     android {
@@ -75,4 +90,25 @@ kotlin {
 
 dependencies {
     "androidRuntimeClasspath"(libs.compose.uiTooling)
+}
+
+// Fix for implicit dependencies in lint tasks with Compose Multiplatform
+tasks.configureEach {
+    if (name == "generateAndroidHostTestLintModel" || name == "lintAnalyzeAndroidHostTest") {
+        dependsOn(tasks.matching { it.name.startsWith("generateResourceAccessors") })
+    }
+}
+
+// Disable iOS simulator tests if xcrun simctl is not available (e.g. wrong xcode-select path)
+tasks.withType<KotlinNativeSimulatorTest>().configureEach {
+    onlyIf {
+        val xcrunResult = providers.exec {
+            commandLine("xcrun", "--find", "simctl")
+            isIgnoreExitValue = true
+        }.result.get().exitValue == 0
+        if (!xcrunResult) {
+            logger.warn("Skipping task $name because 'simctl' is not available. Check your xcode-select path.")
+        }
+        xcrunResult
+    }
 }

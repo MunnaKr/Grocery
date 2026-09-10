@@ -11,4 +11,5 @@ plugins {
     alias(libs.plugins.ktor) apply false
     alias(libs.plugins.hilt) apply false
     alias(libs.plugins.ksp) apply false
+    id("com.gradleup.shadow") version "9.6.1" apply false
 }
