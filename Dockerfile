@@ -12,8 +12,8 @@ RUN unzip -q /tmp/cmdline-tools.zip -d ${ANDROID_HOME}/cmdline-tools/
 RUN mv ${ANDROID_HOME}/cmdline-tools/cmdline-tools ${ANDROID_HOME}/cmdline-tools/latest
 
 # Accept Android licenses and install platform tools
+RUN yes | ${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager "platforms;android-34" "build-tools;34.0.0"
 RUN yes | ${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager --licenses
-RUN ${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager "platforms;android-34"
 
 WORKDIR /app
 # Copy the entire project
