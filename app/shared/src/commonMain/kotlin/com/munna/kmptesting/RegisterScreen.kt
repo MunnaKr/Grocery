@@ -2,6 +2,7 @@ package com.munna.kmptesting
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -130,7 +131,13 @@ fun RegisterScreen(viewModel: AuthViewModel, onBack: () -> Unit) {
             Text("Register")
         }
         if (message.isNotEmpty()) {
-            Text(text = message, color = MaterialTheme.colorScheme.primary, modifier = Modifier.padding(8.dp))
+            SelectionContainer {
+                Text(
+                    text = message,
+                    color = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.padding(8.dp)
+                )
+            }
         }
         Spacer(modifier = Modifier.height(8.dp))
         TextButton(onClick = {
