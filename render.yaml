@@ -3,6 +3,7 @@ services:
     name: kmptesting-server
     runtime: docker
     dockerfilePath: server/Dockerfile
+    dockerContext: .
     plan: free
     region: ohio
     envVars:
