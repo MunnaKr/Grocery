@@ -13,8 +13,17 @@ class IosSessionManager : SessionManager {
         return defaults.stringForKey("user_name") ?: ""
     }
 
+    override fun saveUserType(userType: String) {
+        defaults.setObject(userType, "user_type")
+    }
+
+    override fun getUserType(): String {
+        return defaults.stringForKey("user_type") ?: ""
+    }
+
     override fun clear() {
         defaults.removeObjectForKey("user_name")
+        defaults.removeObjectForKey("user_type")
     }
 }
 

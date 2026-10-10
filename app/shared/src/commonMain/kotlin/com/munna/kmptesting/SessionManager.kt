@@ -3,6 +3,8 @@ package com.munna.kmptesting
 interface SessionManager {
     fun saveUserName(userName: String)
     fun getUserName(): String
+    fun saveUserType(userType: String)
+    fun getUserType(): String
     fun clear()
 }
 

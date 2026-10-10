@@ -11,8 +11,8 @@ data class LoginRequest(
 @Serializable
 data class RegisterRequest(
     val fullName: String,
-    val employeeId: String,
-    val email: String,
+    val username: String,
+    val userType: String,
     val gender: String,
     val address: String,
     val password: String
@@ -22,5 +22,6 @@ data class RegisterRequest(
 data class AuthResponse(
     val success: Boolean,
     val message: String,
-    val userName: String? = null
+    val userName: String? = null,
+    val userType: String? = null
 )

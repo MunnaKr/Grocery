@@ -11,28 +11,15 @@ plugins {
 
 kotlin {
 
-    val isXcodeFunctional = try {
-        providers.exec {
-            commandLine("xcodebuild", "-version")
-            isIgnoreExitValue = true
-        }.result.get().exitValue == 0
-    } catch (e: Exception) {
-        false
-    }
-
-    if (isXcodeFunctional) {
-        listOf(
-            iosArm64(),
-            iosSimulatorArm64()
-        ).forEach { iosTarget ->
-            iosTarget.binaries.framework {
-                baseName = "Shared"
-                isStatic = true
-                freeCompilerArgs += "-Xbinary=bundleId=com.munna.kmptesting.shared"
-            }
+    listOf(
+        iosArm64(),
+        iosSimulatorArm64()
+    ).forEach { iosTarget ->
+        iosTarget.binaries.framework {
+            baseName = "Shared"
+            isStatic = true
+            freeCompilerArgs += "-Xbinary=bundleId=com.munna.kmptesting.shared"
         }
-    } else {
-        logger.warn("iOS targets are disabled because 'xcodebuild' is not functional or Xcode is not properly configured.")
     }
     
     android {

@@ -22,6 +22,9 @@ class AuthViewModel(
     private val _userName = MutableStateFlow(sessionManager.getUserName())
     val userName = _userName.asStateFlow()
 
+    private val _userType = MutableStateFlow(sessionManager.getUserType())
+    val userType = _userType.asStateFlow()
+
     fun login(request: LoginRequest) {
         viewModelScope.launch {
             try {
@@ -29,8 +32,11 @@ class AuthViewModel(
                 _message.value = response.message
                 if (response.success) {
                     val name = response.userName ?: "User"
+                    val type = response.userType ?: "Customer"
                     _userName.value = name
+                    _userType.value = type
                     sessionManager.saveUserName(name)
+                    sessionManager.saveUserType(type)
                     _isLoginSuccess.value = true
                 }
             } catch (e: Exception) {
@@ -47,6 +53,7 @@ class AuthViewModel(
         sessionManager.clear()
         _isLoginSuccess.value = false
         _userName.value = ""
+        _userType.value = ""
         _message.value = ""
     }
 
@@ -59,6 +66,7 @@ class AuthViewModel(
                     _isRegisterSuccess.value = true
                 }
             } catch (e: Exception) {
+                print("Error: ${e.message}")
                 _message.value = "Error: ${e.message}"
             }
         }

@@ -14,6 +14,14 @@ class AndroidSessionManager(context: Context) : SessionManager {
         return prefs.getString("user_name", "") ?: ""
     }
 
+    override fun saveUserType(userType: String) {
+        prefs.edit().putString("user_type", userType).apply()
+    }
+
+    override fun getUserType(): String {
+        return prefs.getString("user_type", "") ?: ""
+    }
+
     override fun clear() {
         prefs.edit().clear().apply()
     }

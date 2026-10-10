@@ -2,6 +2,7 @@ package com.munna.kmptesting
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -10,22 +11,26 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RegisterScreen(viewModel: AuthViewModel, onBack: () -> Unit) {
     var fullName by remember { mutableStateOf("") }
-    var employeeId by remember { mutableStateOf("") }
-    var email by remember { mutableStateOf("") }
+    var username by remember { mutableStateOf("") }
+    var userType by remember { mutableStateOf("Customer") }
     var gender by remember { mutableStateOf("Male") }
     var address by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     val message by viewModel.message.collectAsState()
     val isSuccess by viewModel.isRegisterSuccess.collectAsState()
 
+    val userTypes = listOf("Sub Admin/Seller", "Customer", "Deliver Boy")
+    var expanded by remember { mutableStateOf(false) }
+
     LaunchedEffect(isSuccess) {
         if (isSuccess) {
             fullName = ""
-            employeeId = ""
-            email = ""
+            username = ""
+            userType = "Customer"
             gender = "Male"
             address = ""
             password = ""
@@ -56,19 +61,52 @@ fun RegisterScreen(viewModel: AuthViewModel, onBack: () -> Unit) {
         Spacer(modifier = Modifier.height(8.dp))
 
         OutlinedTextField(
-            value = employeeId,
-            onValueChange = { employeeId = it },
-            label = { Text("Employee ID") },
+            value = username,
+            onValueChange = { username = it },
+            label = { Text("Username") },
             modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(8.dp))
 
         OutlinedTextField(
-            value = email,
-            onValueChange = { email = it },
-            label = { Text("Official Mail ID") },
+            value = password,
+            onValueChange = { password = it },
+            label = { Text("Password") },
+            visualTransformation = PasswordVisualTransformation(),
             modifier = Modifier.fillMaxWidth()
         )
+        Spacer(modifier = Modifier.height(8.dp))
+
+        ExposedDropdownMenuBox(
+            expanded = expanded,
+            onExpandedChange = { expanded = !expanded },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            OutlinedTextField(
+                value = userType,
+                onValueChange = {},
+                readOnly = true,
+                label = { Text("User Type") },
+                trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
+                colors = ExposedDropdownMenuDefaults.outlinedTextFieldColors(),
+                modifier = Modifier.menuAnchor().fillMaxWidth()
+            )
+            ExposedDropdownMenu(
+                expanded = expanded,
+                onDismissRequest = { expanded = false }
+            ) {
+                userTypes.forEach { type ->
+                    DropdownMenuItem(
+                        text = { Text(type) },
+                        onClick = {
+                            userType = type
+                            expanded = false
+                        },
+                        contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding
+                    )
+                }
+            }
+        }
         Spacer(modifier = Modifier.height(16.dp))
 
         Text(
@@ -107,22 +145,13 @@ fun RegisterScreen(viewModel: AuthViewModel, onBack: () -> Unit) {
             modifier = Modifier.fillMaxWidth(),
             minLines = 3
         )
-        Spacer(modifier = Modifier.height(8.dp))
-
-        OutlinedTextField(
-            value = password,
-            onValueChange = { password = it },
-            label = { Text("Password") },
-            visualTransformation = PasswordVisualTransformation(),
-            modifier = Modifier.fillMaxWidth()
-        )
 
         Spacer(modifier = Modifier.height(24.dp))
 
         Button(
             onClick = {
                 viewModel.register(
-                    RegisterRequest(fullName, employeeId, email, gender, address, password)
+                    RegisterRequest(fullName, username, userType, gender, address, password)
                 )
             },
             modifier = Modifier.fillMaxWidth()
@@ -130,7 +159,13 @@ fun RegisterScreen(viewModel: AuthViewModel, onBack: () -> Unit) {
             Text("Register")
         }
         if (message.isNotEmpty()) {
-            Text(text = message, color = MaterialTheme.colorScheme.primary, modifier = Modifier.padding(8.dp))
+            SelectionContainer {
+                Text(
+                    text = message,
+                    color = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.padding(8.dp)
+                )
+            }
         }
         Spacer(modifier = Modifier.height(8.dp))
         TextButton(onClick = {
