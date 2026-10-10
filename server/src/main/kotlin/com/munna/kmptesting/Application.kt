@@ -14,6 +14,8 @@ import io.ktor.server.routing.*
 
 fun main() {
     val port = System.getenv("PORT")?.toInt() ?: 8080
+    embeddedServer(Netty, port = port, host = "0.0.0.0", module = Application::module)
+    val port = System.getenv("PORT")?.toInt() ?: 8080
     DatabaseFactory.init()
     embeddedServer(Netty, port = port, host = "0.0.0.0", module = Application::module)
         .start(wait = true)
@@ -32,9 +34,9 @@ fun Application.module() {
             )
         }
     }
-    
+
     val userRepository = UserRepository()
-    
+
     routing {
         get("/") {
             call.respondText("Welcome to KMP Server!")

@@ -1,6 +1,7 @@
 package com.munna.kmptesting
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -51,7 +52,13 @@ fun LoginScreen(
             Text("Login")
         }
         if (message.isNotEmpty()) {
-            Text(text = message, color = MaterialTheme.colorScheme.primary, modifier = Modifier.padding(8.dp))
+            SelectionContainer {
+                Text(
+                    text = message,
+                    color = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.padding(8.dp)
+                )
+            }
         }
         Spacer(modifier = Modifier.height(8.dp))
         TextButton(onClick = {

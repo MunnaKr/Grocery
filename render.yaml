@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: kmp-grocery-server
+    name: kmptesting-server
     runtime: docker
     plan: free
     region: ohio

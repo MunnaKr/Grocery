@@ -18,11 +18,7 @@ class ApiClient {
         }
     }
 
-    private val BASE_URL = if (getPlatform().name.contains("Android")) {
-        "http://10.0.2.2:8080"
-    } else {
-        "http://localhost:8080"
-    }
+    private val BASE_URL = "https://kmptesting.onrender.com"
 
     suspend fun login(request: LoginRequest): AuthResponse {
         return client.post("$BASE_URL/login") {
