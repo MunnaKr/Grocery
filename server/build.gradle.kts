@@ -1,10 +1,12 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 plugins {
     alias(libs.plugins.kotlinJvm)
     application
     alias(libs.plugins.kotlinSerialization)
+    id("com.gradleup.shadow")
 }
 
 group = "com.munna.kmptesting"
@@ -23,6 +25,10 @@ tasks.withType<KotlinCompile>().configureEach {
     compilerOptions {
         jvmTarget.set(JvmTarget.JVM_17)
     }
+}
+
+tasks.withType<ShadowJar> {
+    archiveFileName.set("server-all.jar")
 }
 
 dependencies {
