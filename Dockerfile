@@ -1,11 +1,11 @@
+
 FROM gradle:8.7-jdk17 AS build
 
 WORKDIR /app
 
 COPY . .
 
-RUN chmod +x ./gradlew
-RUN ./gradlew :server:buildFatJar --no-daemon
+RUN gradle :server:buildFatJar --no-daemon
 
 FROM eclipse-temurin:17-jre
 
