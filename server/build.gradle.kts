@@ -31,6 +31,10 @@ tasks.withType<ShadowJar> {
     archiveFileName.set("server-all.jar")
 }
 
+tasks.register("buildFatJar") {
+    dependsOn(tasks.shadowJar)
+}
+
 dependencies {
     api(project(":core"))
     implementation(libs.logback)
