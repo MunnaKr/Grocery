@@ -18,7 +18,7 @@ class ApiClient {
         }
     }
 
-    private val BASE_URL = "https://kmptesting.onrender.com"
+    private val BASE_URL = "https://grocery-5p3u.onrender.com"
 
     suspend fun login(request: LoginRequest): AuthResponse {
         return client.post("$BASE_URL/login") {
