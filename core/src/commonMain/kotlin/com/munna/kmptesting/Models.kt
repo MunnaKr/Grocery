@@ -23,3 +23,10 @@ data class AuthResponse(
     val message: String,
     val userName: String? = null
 )
+
+@Serializable
+data class GroceryItemDto(
+    val name: String,
+    val icon: String,
+    val type: String
+)

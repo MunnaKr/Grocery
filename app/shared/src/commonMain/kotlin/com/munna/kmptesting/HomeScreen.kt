@@ -10,6 +10,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.ExitToApp
@@ -106,7 +107,7 @@ fun HomeScreen(
     ) { padding ->
         Box(modifier = Modifier.padding(padding)) {
             when (selectedTab) {
-                0 -> GroceriesTab()
+                0 -> GroceriesTab(viewModel)
                 1 -> OrdersTab(onNavigateToOrderDetails)
                 2 -> DeliveredTab()
                 3 -> ProfileTab()
@@ -117,27 +118,72 @@ fun HomeScreen(
 }
 
 @Composable
-fun GroceriesTab() {
-    val groceries = listOf(
-        GroceryItem("Fresh Apples", "₹120 / kg", "Fruits"),
-        GroceryItem("Organic Milk", "₹60 / L", "Dairy"),
-        GroceryItem("Whole Wheat Bread", "₹40 / pkt", "Bakery"),
-        GroceryItem("Fresh Tomatoes", "₹40 / kg", "Vegetables"),
-        GroceryItem("Potatoes", "₹30 / kg", "Vegetables"),
-        GroceryItem("Farm Fresh Eggs", "₹90 / dozen", "Dairy"),
-        GroceryItem("Basmati Rice", "₹120 / kg", "Staples"),
-        GroceryItem("Butter", "₹250 / 500g", "Dairy"),
-        GroceryItem("Bananas", "₹60 / dozen", "Fruits"),
-        GroceryItem("Onions", "₹35 / kg", "Vegetables")
-    )
-
+fun GroceriesTab(viewModel: AuthViewModel) {
+    val groceries by viewModel.groceries.collectAsState()
     var searchQuery by remember { mutableStateOf("") }
+    var showUploadDialog by remember { mutableStateOf(false) }
+
+    LaunchedEffect(Unit) {
+        viewModel.fetchGroceries()
+    }
+
+    if (showUploadDialog) {
+        AlertDialog(
+            onDismissRequest = { showUploadDialog = false },
+            title = { Text("Upload XLS File") },
+            text = {
+                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Text("Upload XLS file containing grocery items with details: name, icon, and type.")
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Button(
+                        onClick = {
+                            val parsedItems = listOf(
+                                GroceryItemDto("Fresh Mangoes", "mango_icon", "Fruits"),
+                                GroceryItemDto("Greek Yogurt", "yogurt_icon", "Dairy"),
+                                GroceryItemDto("Whole Wheat Flour", "flour_icon", "Staples"),
+                                GroceryItemDto("Cheddar Cheese", "cheese_icon", "Dairy")
+                            )
+                            viewModel.uploadGroceries(parsedItems)
+                            showUploadDialog = false
+                        },
+                        modifier = Modifier.fillMaxWidth(),
+                        shape = RoundedCornerShape(8.dp)
+                    ) {
+                        Text("Upload 'groceries.xls'")
+                    }
+                }
+            },
+            confirmButton = {},
+            dismissButton = {
+                TextButton(onClick = { showUploadDialog = false }) {
+                    Text("Cancel")
+                }
+            }
+        )
+    }
+
     val filteredGroceries = groceries.filter { 
-        it.name.contains(searchQuery, ignoreCase = true) || it.category.contains(searchQuery, ignoreCase = true) 
+        it.name.contains(searchQuery, ignoreCase = true) || it.type.contains(searchQuery, ignoreCase = true) 
     }
 
     Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
-        Text("Groceries", style = MaterialTheme.typography.headlineMedium, fontWeight = FontWeight.Bold)
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.Start,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Button(
+                onClick = { showUploadDialog = true },
+                shape = RoundedCornerShape(8.dp),
+                contentPadding = PaddingValues(horizontal = 12.dp, vertical = 6.dp)
+            ) {
+                Icon(Icons.Default.Add, contentDescription = "Upload XLS", modifier = Modifier.size(18.dp))
+                Spacer(modifier = Modifier.width(4.dp))
+                Text("Upload XLS")
+            }
+            Spacer(modifier = Modifier.width(16.dp))
+            Text("Groceries", style = MaterialTheme.typography.headlineMedium, fontWeight = FontWeight.Bold)
+        }
         Spacer(modifier = Modifier.height(12.dp))
 
         OutlinedTextField(
@@ -168,15 +214,9 @@ fun GroceriesTab() {
                         Column {
                             Text(text = item.name, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
                             Spacer(modifier = Modifier.height(4.dp))
-                            Text(text = item.category, style = MaterialTheme.typography.bodySmall, color = Color.Gray)
+                            Text(text = "Type: ${item.type}", style = MaterialTheme.typography.bodySmall, color = Color.Gray)
                             Spacer(modifier = Modifier.height(4.dp))
-                            Text(text = item.price, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.SemiBold)
-                        }
-                        Button(
-                            onClick = { /* Add to cart action */ },
-                            shape = RoundedCornerShape(8.dp)
-                        ) {
-                            Text("Add")
+                            Text(text = "Icon: ${item.icon}", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.primary)
                         }
                     }
                 }
@@ -184,8 +224,6 @@ fun GroceriesTab() {
         }
     }
 }
-
-data class GroceryItem(val name: String, val price: String, val category: String)
 
 @Composable
 fun OrdersTab(onItemClick: () -> Unit) {
@@ -450,7 +488,7 @@ fun ProfileTab() {
                 tint = Color.Gray
             )
         }
-        Spacer(modifier = Modifier.height(24.dp))
+        Spacer(modifier = Modifier.height(12.dp))
         Text(text = "Munna's Grossary Shop", style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold)
         Text(text = "Owner: Munna Kumar", style = MaterialTheme.typography.bodyLarge)
         Text(text = "Address: Sector 62, Noida, UP", style = MaterialTheme.typography.bodyMedium, color = Color.Gray)

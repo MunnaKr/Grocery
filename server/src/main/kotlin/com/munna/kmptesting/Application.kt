@@ -17,8 +17,13 @@ fun main() {
         .start(wait = true)
 }
 
-// Simple in-memory database
+// Simple in-memory databases
 val userDatabase = mutableListOf<RegisterRequest>()
+val groceryDatabase = mutableListOf<GroceryItemDto>(
+    GroceryItemDto("Fresh Apples", "apple_icon", "Fruits"),
+    GroceryItemDto("Organic Milk", "milk_icon", "Dairy"),
+    GroceryItemDto("Whole Wheat Bread", "bread_icon", "Bakery")
+)
 
 fun Application.module() {
     install(ContentNegotiation) {
@@ -27,6 +32,35 @@ fun Application.module() {
     routing {
         get("/") {
             call.respondText("Welcome to KMP Server!")
+        }
+        get("/groceries") {
+            try {
+                println("SERVER GET /groceries called")
+                call.respond(groceryDatabase)
+            } catch (e: Exception) {
+                call.respond(emptyList<GroceryItemDto>())
+            }
+        }
+        post("/groceries") {
+            val url = call.request.uri
+            try {
+                val requestBody = call.receiveText()
+                println("SERVER REQUEST URL: $url")
+                println("SERVER REQUEST BODY: $requestBody")
+
+                val items = Json.decodeFromString<List<GroceryItemDto>>(requestBody)
+                groceryDatabase.clear()
+                groceryDatabase.addAll(items)
+
+                val response = AuthResponse(true, "Successfully uploaded ${items.size} grocery items")
+                println("SERVER RESPONSE: ${Json.encodeToString(response)}")
+                call.respond(response)
+            } catch (e: Exception) {
+                val errorResponse = AuthResponse(false, "Failed to upload groceries: ${e.message}")
+                println("SERVER REQUEST URL: $url")
+                println("SERVER RESPONSE ERROR: ${Json.encodeToString(errorResponse)}")
+                call.respond(errorResponse)
+            }
         }
         post("/login") {
             val url = call.request.uri

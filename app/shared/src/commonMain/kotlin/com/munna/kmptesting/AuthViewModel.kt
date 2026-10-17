@@ -22,6 +22,13 @@ class AuthViewModel(
     private val _userName = MutableStateFlow(sessionManager.getUserName())
     val userName = _userName.asStateFlow()
 
+    private val _groceries = MutableStateFlow<List<GroceryItemDto>>(emptyList())
+    val groceries = _groceries.asStateFlow()
+
+    init {
+        fetchGroceries()
+    }
+
     fun login(request: LoginRequest) {
         viewModelScope.launch {
             try {
@@ -60,6 +67,30 @@ class AuthViewModel(
                 }
             } catch (e: Exception) {
                 _message.value = "Error: ${e.message}"
+            }
+        }
+    }
+
+    fun fetchGroceries() {
+        viewModelScope.launch {
+            try {
+                _groceries.value = repository.getGroceries()
+            } catch (e: Exception) {
+                _message.value = "Error fetching groceries: ${e.message}"
+            }
+        }
+    }
+
+    fun uploadGroceries(items: List<GroceryItemDto>) {
+        viewModelScope.launch {
+            try {
+                val res = repository.uploadGroceries(items)
+                _message.value = res.message
+                if (res.success) {
+                    fetchGroceries()
+                }
+            } catch (e: Exception) {
+                _message.value = "Error uploading groceries: ${e.message}"
             }
         }
     }
