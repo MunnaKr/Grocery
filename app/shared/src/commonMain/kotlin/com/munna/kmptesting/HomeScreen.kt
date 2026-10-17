@@ -17,6 +17,7 @@ import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.ShoppingCart
+import androidx.compose.material.icons.filled.Store
 import androidx.compose.material.icons.filled.Call
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -30,7 +31,11 @@ import androidx.compose.ui.unit.sp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(viewModel: AuthViewModel, onLogout: () -> Unit) {
+fun HomeScreen(
+    viewModel: AuthViewModel,
+    onLogout: () -> Unit,
+    onNavigateToOrderDetails: () -> Unit
+) {
     var selectedTab by remember { mutableStateOf(0) }
     val userName by viewModel.userName.collectAsState()
     var showLogoutDialog by remember { mutableStateOf(false) }
@@ -61,82 +66,318 @@ fun HomeScreen(viewModel: AuthViewModel, onLogout: () -> Unit) {
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(text = userName, fontWeight = FontWeight.Bold) }
+                title = { Text(text = userName.ifEmpty { "Grocery App" }, fontWeight = FontWeight.Bold) }
             )
         },
         bottomBar = {
             NavigationBar {
                 NavigationBarItem(
-                    icon = { Icon(Icons.Default.ShoppingCart, contentDescription = "Orders") },
-                    label = { Text("Orders") },
+                    icon = { Icon(Icons.Default.Store, contentDescription = "Groceries") },
+                    label = { Text("Groceries") },
                     selected = selectedTab == 0,
                     onClick = { selectedTab = 0 }
                 )
                 NavigationBarItem(
-                    icon = { Icon(Icons.Default.CheckCircle, contentDescription = "Delivered") },
-                    label = { Text("Delivered") },
+                    icon = { Icon(Icons.Default.ShoppingCart, contentDescription = "Orders") },
+                    label = { Text("Orders") },
                     selected = selectedTab == 1,
                     onClick = { selectedTab = 1 }
                 )
                 NavigationBarItem(
-                    icon = { Icon(Icons.Default.Person, contentDescription = "Profile") },
-                    label = { Text("Profile") },
+                    icon = { Icon(Icons.Default.CheckCircle, contentDescription = "Delivered") },
+                    label = { Text("Delivered") },
                     selected = selectedTab == 2,
                     onClick = { selectedTab = 2 }
                 )
                 NavigationBarItem(
-                    icon = { Icon(Icons.Default.Settings, contentDescription = "Settings") },
-                    label = { Text("Settings") },
+                    icon = { Icon(Icons.Default.Person, contentDescription = "Profile") },
+                    label = { Text("Profile") },
                     selected = selectedTab == 3,
                     onClick = { selectedTab = 3 }
+                )
+                NavigationBarItem(
+                    icon = { Icon(Icons.Default.Settings, contentDescription = "Settings") },
+                    label = { Text("Settings") },
+                    selected = selectedTab == 4,
+                    onClick = { selectedTab = 4 }
                 )
             }
         }
     ) { padding ->
         Box(modifier = Modifier.padding(padding)) {
             when (selectedTab) {
-                0 -> OrdersTab()
-                1 -> DeliveredTab()
-                2 -> ProfileTab()
-                3 -> SettingsTab { showLogoutDialog = true }
+                0 -> GroceriesTab()
+                1 -> OrdersTab(onNavigateToOrderDetails)
+                2 -> DeliveredTab()
+                3 -> ProfileTab()
+                4 -> SettingsTab { showLogoutDialog = true }
             }
         }
     }
 }
 
 @Composable
-fun OrdersTab() {
-    val items = listOf("Milk" to "1L", "Bread" to "1 pkt", "Eggs" to "12 pcs", "Apples" to "1kg", "Rice" to "5kg")
-    var selectedItems by remember { mutableStateOf(setOf<String>()) }
+fun GroceriesTab() {
+    val groceries = listOf(
+        GroceryItem("Fresh Apples", "₹120 / kg", "Fruits"),
+        GroceryItem("Organic Milk", "₹60 / L", "Dairy"),
+        GroceryItem("Whole Wheat Bread", "₹40 / pkt", "Bakery"),
+        GroceryItem("Fresh Tomatoes", "₹40 / kg", "Vegetables"),
+        GroceryItem("Potatoes", "₹30 / kg", "Vegetables"),
+        GroceryItem("Farm Fresh Eggs", "₹90 / dozen", "Dairy"),
+        GroceryItem("Basmati Rice", "₹120 / kg", "Staples"),
+        GroceryItem("Butter", "₹250 / 500g", "Dairy"),
+        GroceryItem("Bananas", "₹60 / dozen", "Fruits"),
+        GroceryItem("Onions", "₹35 / kg", "Vegetables")
+    )
 
-    LazyColumn(modifier = Modifier.fillMaxSize().padding(16.dp)) {
-        item {
-            Text("Orders", style = MaterialTheme.typography.headlineMedium)
-            Spacer(modifier = Modifier.height(16.dp))
-        }
-        items(items) { (name, qty) ->
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable {
-                        selectedItems = if (selectedItems.contains(name)) {
-                            selectedItems - name
-                        } else {
-                            selectedItems + name
+    var searchQuery by remember { mutableStateOf("") }
+    val filteredGroceries = groceries.filter { 
+        it.name.contains(searchQuery, ignoreCase = true) || it.category.contains(searchQuery, ignoreCase = true) 
+    }
+
+    Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
+        Text("Groceries", style = MaterialTheme.typography.headlineMedium, fontWeight = FontWeight.Bold)
+        Spacer(modifier = Modifier.height(12.dp))
+
+        OutlinedTextField(
+            value = searchQuery,
+            onValueChange = { searchQuery = it },
+            label = { Text("Search groceries...") },
+            modifier = Modifier.fillMaxWidth(),
+            shape = RoundedCornerShape(12.dp)
+        )
+        Spacer(modifier = Modifier.height(16.dp))
+
+        LazyColumn(modifier = Modifier.fillMaxSize()) {
+            items(filteredGroceries) { item ->
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 6.dp),
+                    shape = RoundedCornerShape(12.dp),
+                    elevation = CardDefaults.cardElevation(2.dp)
+                ) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Column {
+                            Text(text = item.name, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+                            Spacer(modifier = Modifier.height(4.dp))
+                            Text(text = item.category, style = MaterialTheme.typography.bodySmall, color = Color.Gray)
+                            Spacer(modifier = Modifier.height(4.dp))
+                            Text(text = item.price, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.SemiBold)
+                        }
+                        Button(
+                            onClick = { /* Add to cart action */ },
+                            shape = RoundedCornerShape(8.dp)
+                        ) {
+                            Text("Add")
                         }
                     }
-                    .padding(vertical = 8.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Checkbox(
-                    checked = selectedItems.contains(name),
-                    onCheckedChange = {
-                        selectedItems = if (it) selectedItems + name else selectedItems - name
-                    }
+                }
+            }
+        }
+    }
+}
+
+data class GroceryItem(val name: String, val price: String, val category: String)
+
+@Composable
+fun OrdersTab(onItemClick: () -> Unit) {
+    var selectedTopTab by remember { mutableStateOf(0) }
+    val topTabs = listOf("Packaging", "New Order", "Delivered")
+
+    Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
+        Text("Orders", style = MaterialTheme.typography.headlineMedium, fontWeight = FontWeight.Bold)
+        Spacer(modifier = Modifier.height(12.dp))
+
+        ScrollableTabRow(
+            selectedTabIndex = selectedTopTab,
+            edgePadding = 0.dp,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            topTabs.forEachIndexed { index, title ->
+                Tab(
+                    selected = selectedTopTab == index,
+                    onClick = { selectedTopTab = index },
+                    text = { Text(title, fontWeight = FontWeight.SemiBold) }
                 )
-                Column {
-                    Text(text = name, style = MaterialTheme.typography.bodyLarge)
-                    Text(text = "Qty: $qty", style = MaterialTheme.typography.bodySmall)
+            }
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        when (selectedTopTab) {
+            0 -> PackagingContent(onItemClick)
+            1 -> NewOrderContent(onItemClick)
+            2 -> DeliveredOrderContent(onItemClick)
+        }
+    }
+}
+
+data class PackagingOrder(
+    val customerName: String,
+    val address: String,
+    val itemQuantity: String,
+    val totalPrice: String,
+    val status: String = "Packaging in progress"
+)
+
+@Composable
+fun PackagingContent(onItemClick: () -> Unit) {
+    val packagingOrders = listOf(
+        PackagingOrder("Rahul Sharma", "Sector 62, Noida, UP", "Milk (2L), Bread (1 pkt)", "₹140"),
+        PackagingOrder("Priya Singh", "Indirapuram, Ghaziabad", "Eggs (12 pcs), Apples (1kg)", "₹210"),
+        PackagingOrder("Amit Kumar", "Sector 18, Noida, UP", "Basmati Rice (5kg)", "₹600")
+    )
+
+    LazyColumn(modifier = Modifier.fillMaxSize()) {
+        items(packagingOrders) { order ->
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 6.dp)
+                    .clickable { onItemClick() },
+                shape = RoundedCornerShape(12.dp),
+                elevation = CardDefaults.cardElevation(2.dp)
+            ) {
+                Column(modifier = Modifier.padding(16.dp)) {
+                    Text(text = "Customer: ${order.customerName}", fontWeight = FontWeight.Bold, style = MaterialTheme.typography.titleMedium)
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Text(text = "Address: ${order.address}", style = MaterialTheme.typography.bodyMedium)
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Text(text = "Item Quantity: ${order.itemQuantity}", style = MaterialTheme.typography.bodyMedium)
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Text(text = "Total Price: ${order.totalPrice}", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.SemiBold)
+                    Spacer(modifier = Modifier.height(6.dp))
+                    Text(text = "Status: ${order.status}", style = MaterialTheme.typography.bodySmall, color = Color.Gray)
+                }
+            }
+        }
+    }
+}
+
+data class NewOrder(
+    val orderId: String,
+    val customerName: String,
+    val address: String,
+    val distance: String,
+    val itemsWithQty: List<Pair<String, String>>,
+    val totalQuantity: String
+)
+
+@Composable
+fun NewOrderContent(onItemClick: () -> Unit) {
+    val newOrders = listOf(
+        NewOrder(
+            orderId = "Order #101",
+            customerName = "Rahul Sharma",
+            address = "Sector 62, Noida, UP",
+            distance = "2.4 km",
+            itemsWithQty = listOf("Apples" to "1kg", "Rice" to "5kg"),
+            totalQuantity = "6 kg"
+        ),
+        NewOrder(
+            orderId = "Order #102",
+            customerName = "Priya Singh",
+            address = "Indirapuram, Ghaziabad",
+            distance = "4.1 km",
+            itemsWithQty = listOf("Tomatoes" to "2kg", "Onions" to "1kg"),
+            totalQuantity = "3 kg"
+        ),
+        NewOrder(
+            orderId = "Order #103",
+            customerName = "Amit Kumar",
+            address = "Sector 18, Noida, UP",
+            distance = "1.8 km",
+            itemsWithQty = listOf("Milk" to "2L", "Bread" to "1 pkt", "Eggs" to "12 pcs"),
+            totalQuantity = "15 items"
+        )
+    )
+
+    LazyColumn(modifier = Modifier.fillMaxSize()) {
+        items(newOrders) { order ->
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 6.dp)
+                    .clickable { onItemClick() },
+                shape = RoundedCornerShape(12.dp),
+                elevation = CardDefaults.cardElevation(2.dp)
+            ) {
+                Column(modifier = Modifier.padding(16.dp)) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(text = order.orderId, fontWeight = FontWeight.Bold, style = MaterialTheme.typography.titleMedium)
+                        Text(text = order.distance, color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.SemiBold)
+                    }
+                    Spacer(modifier = Modifier.height(6.dp))
+                    Text(text = "Name: ${order.customerName}", style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Medium)
+                    Spacer(modifier = Modifier.height(2.dp))
+                    Text(text = "Address: ${order.address}", style = MaterialTheme.typography.bodyMedium, color = Color.Gray)
+                    Spacer(modifier = Modifier.height(6.dp))
+                    
+                    Text(text = "Items:", style = MaterialTheme.typography.bodySmall, fontWeight = FontWeight.Bold)
+                    order.itemsWithQty.forEach { (item, qty) ->
+                        Text(text = "• $item ($qty)", style = MaterialTheme.typography.bodyMedium)
+                    }
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Text(text = "Total Quantity: ${order.totalQuantity}", style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.SemiBold)
+                    
+                    Spacer(modifier = Modifier.height(12.dp))
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        Button(
+                            onClick = { /* Accept order */ },
+                            modifier = Modifier.weight(1f),
+                            shape = RoundedCornerShape(8.dp)
+                        ) {
+                            Text("Accept")
+                        }
+                        OutlinedButton(
+                            onClick = { /* Cancel order */ },
+                            modifier = Modifier.weight(1f),
+                            shape = RoundedCornerShape(8.dp),
+                            colors = ButtonDefaults.outlinedButtonColors(contentColor = Color.Red)
+                        ) {
+                            Text("Cancel")
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun DeliveredOrderContent(onItemClick: () -> Unit) {
+    val delivered = listOf("Order #99" to "Butter (500g), Bananas (1 doz)", "Order #98" to "Milk (2L)")
+    LazyColumn(modifier = Modifier.fillMaxSize()) {
+        items(delivered) { (orderId, details) ->
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 6.dp)
+                    .clickable { onItemClick() },
+                shape = RoundedCornerShape(12.dp),
+                elevation = CardDefaults.cardElevation(2.dp)
+            ) {
+                Column(modifier = Modifier.padding(16.dp)) {
+                    Text(text = orderId, fontWeight = FontWeight.Bold, style = MaterialTheme.typography.titleMedium)
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Text(text = "Items: $details")
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Text(text = "Status: Successfully Delivered", color = Color.Green, fontWeight = FontWeight.SemiBold)
                 }
             }
         }

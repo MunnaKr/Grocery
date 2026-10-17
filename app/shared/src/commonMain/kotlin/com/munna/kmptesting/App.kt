@@ -22,6 +22,8 @@ sealed interface Route {
     data object Register : Route
     @Serializable
     data object Home : Route
+    @Serializable
+    data object OrderDetails : Route
 }
 
 @Composable
@@ -70,7 +72,16 @@ fun App() {
                             navController.navigate(Route.Login) {
                                 popUpTo<Route.Home> { inclusive = true }
                             }
+                        },
+                        onNavigateToOrderDetails = {
+                            navController.navigate(Route.OrderDetails)
                         }
+                    )
+                }
+
+                composable<Route.OrderDetails> {
+                    OrderDetailsScreen(
+                        onBack = { navController.popBackStack() }
                     )
                 }
             }
