@@ -11,25 +11,28 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RegisterScreen(viewModel: AuthViewModel, onBack: () -> Unit) {
+    var userId by remember { mutableStateOf("") }
     var fullName by remember { mutableStateOf("") }
-    var employeeId by remember { mutableStateOf("") }
-    var email by remember { mutableStateOf("") }
+    var newPassword by remember { mutableStateOf("") }
     var gender by remember { mutableStateOf("Male") }
-    var address by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
+    
+    val userTypes = listOf("Customer", "Sub Admin/Seller", "Delivery")
+    var userType by remember { mutableStateOf(userTypes[0]) }
+    var expanded by remember { mutableStateOf(false) }
+
     val message by viewModel.message.collectAsState()
     val isSuccess by viewModel.isRegisterSuccess.collectAsState()
 
     LaunchedEffect(isSuccess) {
         if (isSuccess) {
+            userId = ""
             fullName = ""
-            employeeId = ""
-            email = ""
+            newPassword = ""
             gender = "Male"
-            address = ""
-            password = ""
+            userType = userTypes[0]
             viewModel.resetRegisterSuccess()
         }
     }
@@ -49,6 +52,14 @@ fun RegisterScreen(viewModel: AuthViewModel, onBack: () -> Unit) {
         Spacer(modifier = Modifier.height(24.dp))
 
         OutlinedTextField(
+            value = userId,
+            onValueChange = { userId = it },
+            label = { Text("User ID") },
+            modifier = Modifier.fillMaxWidth()
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+
+        OutlinedTextField(
             value = fullName,
             onValueChange = { fullName = it },
             label = { Text("Full Name") },
@@ -57,17 +68,10 @@ fun RegisterScreen(viewModel: AuthViewModel, onBack: () -> Unit) {
         Spacer(modifier = Modifier.height(8.dp))
 
         OutlinedTextField(
-            value = employeeId,
-            onValueChange = { employeeId = it },
-            label = { Text("Employee ID") },
-            modifier = Modifier.fillMaxWidth()
-        )
-        Spacer(modifier = Modifier.height(8.dp))
-
-        OutlinedTextField(
-            value = email,
-            onValueChange = { email = it },
-            label = { Text("Official Mail ID") },
+            value = newPassword,
+            onValueChange = { newPassword = it },
+            label = { Text("New Password") },
+            visualTransformation = PasswordVisualTransformation(),
             modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(16.dp))
@@ -99,31 +103,46 @@ fun RegisterScreen(viewModel: AuthViewModel, onBack: () -> Unit) {
             )
             Text("Other")
         }
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(16.dp))
 
-        OutlinedTextField(
-            value = address,
-            onValueChange = { address = it },
-            label = { Text("Address") },
-            modifier = Modifier.fillMaxWidth(),
-            minLines = 3
-        )
-        Spacer(modifier = Modifier.height(8.dp))
-
-        OutlinedTextField(
-            value = password,
-            onValueChange = { password = it },
-            label = { Text("Password") },
-            visualTransformation = PasswordVisualTransformation(),
+        // User Type Dropdown
+        ExposedDropdownMenuBox(
+            expanded = expanded,
+            onExpandedChange = { expanded = !expanded },
             modifier = Modifier.fillMaxWidth()
-        )
+        ) {
+            OutlinedTextField(
+                value = userType,
+                onValueChange = {},
+                readOnly = true,
+                label = { Text("User Type") },
+                trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
+                modifier = Modifier
+                    .menuAnchor()
+                    .fillMaxWidth()
+            )
+            ExposedDropdownMenu(
+                expanded = expanded,
+                onDismissRequest = { expanded = false }
+            ) {
+                userTypes.forEach { type ->
+                    DropdownMenuItem(
+                        text = { Text(type) },
+                        onClick = {
+                            userType = type
+                            expanded = false
+                        }
+                    )
+                }
+            }
+        }
 
         Spacer(modifier = Modifier.height(24.dp))
 
         Button(
             onClick = {
                 viewModel.register(
-                    RegisterRequest(fullName, employeeId, email, gender, address, password)
+                    RegisterRequest(userId, fullName, newPassword, gender, userType)
                 )
             },
             modifier = Modifier.fillMaxWidth()

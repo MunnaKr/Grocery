@@ -31,7 +31,7 @@ fun LoginScreen(
         TextField(
             value = username,
             onValueChange = { username = it },
-            label = { Text("Email") },
+            label = { Text("User ID") },
             modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(8.dp))

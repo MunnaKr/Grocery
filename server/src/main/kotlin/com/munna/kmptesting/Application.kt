@@ -27,27 +27,34 @@ fun Application.module() {
             call.respondText("Welcome to KMP Server!")
         }
         post("/login") {
-            val request = call.receive<LoginRequest>()
-            // Find user in database
-            val user = userDatabase.find { it.employeeId == request.username && it.password == request.password }
-            
-            if (user != null) {
-                call.respond(AuthResponse(true, "Welcome ${user.fullName}, Login successful", user.fullName))
-            } else {
-                call.respond(AuthResponse(false, "Invalid email or password"))
+            try {
+                val request = call.receive<LoginRequest>()
+                val user = userDatabase.find { it.userId == request.username && it.newPassword == request.password }
+                
+                if (user != null) {
+                    call.respond(AuthResponse(true, "Welcome ${user.fullName}, Login successful", user.fullName))
+                } else {
+                    call.respond(AuthResponse(false, "Invalid User ID or password"))
+                }
+            } catch (e: Exception) {
+                call.respond(AuthResponse(false, "Invalid request format: ${e.message}"))
             }
         }
         post("/register") {
-            val request = call.receive<RegisterRequest>()
-            
-            // Check if user already exists (by email or employeeId)
-            val alreadyExists = userDatabase.any { it.email == request.email || it.employeeId == request.employeeId }
-            
-            if (alreadyExists) {
-                call.respond(AuthResponse(false, "User already exist with this email or employee ID"))
-            } else {
-                userDatabase.add(request)
-                call.respond(AuthResponse(true, "User ${request.fullName} registered successfully"))
+            try {
+                val request = call.receive<RegisterRequest>()
+                
+                // Check if user already exists (by userId)
+                val alreadyExists = userDatabase.any { it.userId == request.userId }
+                
+                if (alreadyExists) {
+                    call.respond(AuthResponse(false, "User already exists with this User ID"))
+                } else {
+                    userDatabase.add(request)
+                    call.respond(AuthResponse(true, "User ${request.fullName} registered successfully"))
+                }
+            } catch (e: Exception) {
+                call.respond(AuthResponse(false, "Invalid request format: ${e.message}"))
             }
         }
     }
